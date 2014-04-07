@@ -1,0 +1,6 @@
+.DS_Store
+.DS\_Store
+*
+!wp-content/plugins/bigboard
+!README.md
+!.gitignore
