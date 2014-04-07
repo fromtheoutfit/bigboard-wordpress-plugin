@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: BigBoard
- * Plugin URI: http://bigboard.us/wordpress
+ * Plugin URI: https://github.com/fromtheoutfit/bigboard-wordpress-plugin
  * Description: Plugin to work with the BigBoard.us API.
  * Version: 1.0
  * Author: Michael Witwicki from The Outfit
@@ -16,12 +16,7 @@ class bigboard
     {
         $this->options = array(
             'bigboard_api_key'        => array(
-                'name'  => 'BigBoard API Key',
-                'type'  => 'input',
-                'value' => '',
-            ),
-            'bigboard_api_endpoint'   => array(
-                'name'  => 'BigBoard API Endpoint',
+                'name'  => 'BigBoard Access Token',
                 'type'  => 'input',
                 'value' => '',
             ),
@@ -139,7 +134,7 @@ class bigboard
     {
         $data = '';
 
-        if (isset($this->options['bigboard_api_key']['value']) && isset($this->options['bigboard_api_endpoint']['value']))
+        if (isset($this->options['bigboard_api_key']['value']))
         {
             // get it on the board!
             $p['events'][0]['email']   = $email;
@@ -156,7 +151,7 @@ class bigboard
 
             $options = array(
                 CURLOPT_POST           => 1,
-                CURLOPT_URL            => $this->options['bigboard_api_endpoint']['value'],
+                CURLOPT_URL            => 'https://bigboard.us/api',
                 CURLOPT_RETURNTRANSFER => TRUE,
                 CURLOPT_HTTPHEADER     => $headers,
                 CURLOPT_TIMEOUT        => 60,
