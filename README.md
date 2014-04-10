@@ -1,6 +1,6 @@
 Wordpress Plugin for BigBoard.us
 =========================
-Update your http://bigboard.us activity stream when anyone creates, edits or comments on Wordpress Posts.
+Update your [BigBoard.us](http://bigboard.us) activity stream when anyone creates, edits or comments on Wordpress Posts.
 
 ##Installation
 1. Download the BigBoard Plugin.
