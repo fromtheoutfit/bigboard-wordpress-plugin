@@ -30,6 +30,16 @@ class bigboard
                 'type'  => 'radio',
                 'value' => 'y',
             ),
+            'bigboard_page_new'      => array(
+                'name'  => 'Update BigBoard when pages are created',
+                'type'  => 'radio',
+                'value' => 'y',
+            ),
+            'bigboard_pages_updated'  => array(
+                'name'  => 'Update BigBoard when pages are updated',
+                'type'  => 'radio',
+                'value' => 'y',
+            ),
             'bigboard_posts_comments' => array(
                 'name'  => 'Update BigBoard when posts are commented on',
                 'type'  => 'radio',
@@ -73,6 +83,40 @@ class bigboard
             if ($post->post_date !== $post->post_modified)
             {
                 $this->bigboard_post($author->data->user_email, $post->post_title, 'Post Updated', $url);
+            }
+        }
+    }
+
+    /**
+     * Publish to BigBoard when a new Page is created
+     *
+     * @access public
+     * @param int $id
+     * @return void
+     */
+
+    public function publish_page($id)
+    {
+        // Get information about the page
+        $post   = get_post($id);
+        $author = get_user_by('id', $post->post_author);
+        $url    = get_permalink($post->ID);
+
+        // New post is published
+        if ($this->options['bigboard_posts_new']['value'] == 'y')
+        {
+            if ($post->post_date == $post->post_modified)
+            {
+                $this->bigboard_post($author->data->user_email, $post->post_title, 'Page Published', $url);
+            }
+        }
+
+        // Post is updated
+        if ($this->options['bigboard_posts_updated']['value'] == 'y')
+        {
+            if ($post->post_date !== $post->post_modified)
+            {
+                $this->bigboard_post($author->data->user_email, $post->post_title, 'Page Updated', $url);
             }
         }
     }
@@ -245,6 +289,7 @@ $bb = new bigboard();
 
 // Register actions
 add_action('publish_post', array($bb, 'publish_post'));
+add_action('publish_page', array($bb, 'publish_page'));
 add_action('comment_post', array($bb, 'comment_post'));
 add_action('wp_set_comment_status', array($bb, 'wp_set_comment_status'));
 add_action('admin_menu', array($bb, 'options_menu'));
